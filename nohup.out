@@ -1,0 +1,28 @@
+Traceback (most recent call last):
+  File "httpServer.py", line 99, in <module>
+    server = SimpleHttpServer("localhost",8080)
+  File "httpServer.py", line 80, in __init__
+    self.server = ThreadedHTTPServer(("116.255.163.99",8080), HTTPRequestHandler)
+  File "/usr/lib/python2.7/SocketServer.py", line 408, in __init__
+    self.server_bind()
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 108, in server_bind
+    SocketServer.TCPServer.server_bind(self)
+  File "/usr/lib/python2.7/SocketServer.py", line 419, in server_bind
+    self.socket.bind(self.server_address)
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+Traceback (most recent call last):
+  File "httpServer.py", line 99, in <module>
+    server = SimpleHttpServer("localhost",8080)
+  File "httpServer.py", line 80, in __init__
+    self.server = ThreadedHTTPServer(("116.255.163.99",8080), HTTPRequestHandler)
+  File "/usr/lib/python2.7/SocketServer.py", line 408, in __init__
+    self.server_bind()
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 108, in server_bind
+    SocketServer.TCPServer.server_bind(self)
+  File "/usr/lib/python2.7/SocketServer.py", line 419, in server_bind
+    self.socket.bind(self.server_address)
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
