@@ -27,7 +27,7 @@ class JobHunterEngin():
         self.urlPart = "&keyword="+ keyWord + "&city=" + city
         self.search_url = Main_URL + self.urlPart
         self.searchResult = []
-        
+
     def initBr(self):
         br = mechanize.Browser()
         #br.set_debug_http(True)
@@ -95,9 +95,9 @@ class JobHunterEngin():
         result_obj = {"searchResutl":self.searchResult}
         print json.dumps(result_obj)
         return json.dumps(result_obj)
-                
-            
-            
+
+
+
         #searchList = searchResult
 def main():
     jobHunterTest = JobHunterEngin("hr", "0")
@@ -105,5 +105,3 @@ def main():
     print jobHunterTest.fetch()
 if __name__ == '__main__':
     main()
-    
-    

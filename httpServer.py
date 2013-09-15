@@ -17,7 +17,7 @@ class LocalData():
         jobHunterTest = searchEngin.JobHunterEngin(self.keyword, self.city)
         jobHunterTest.initBr()
         return jobHunterTest.fetch()
-       
+
 
 class HTTPRequestHandler(BaseHTTPRequestHandler):
 
