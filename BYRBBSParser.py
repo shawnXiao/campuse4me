@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import requests
 import chardet
 import time
-from datetime import * 
+from datetime import *
 import re
 from MySQLHelper import MySQLHelper
 
@@ -23,13 +23,13 @@ class TelnetContent():
         tmptContent = infoList[1]
         tmptContent = unicode(tmptContent.split("--")[0]).encode('utf-8')
         self.content = tmptContent
-        
+
 class BYRParser():
     def __init__(self, content, existInfoIdList, urlItem):
         self.isContinue = True
         self.existInfoIdList = existInfoIdList
         self.urlItem = urlItem
-        self.bScontent = BeautifulSoup(''.join(content)) 
+        self.bScontent = BeautifulSoup(''.join(content))
         self.flag =  ["校招", "实习生", "Intern", "intern"]
     def getContent(self, selectors):
         trList = self.bScontent.select("tr")
@@ -68,8 +68,8 @@ class BYRParser():
         else:
             self.isSave = False
             return {}
-                
-                
+
+
     def parserTimeStamp(self, timeStamp):
         publishTime = timeStamp.string
         yesterdayTime =  datetime.now() - timedelta(days=1)
@@ -83,8 +83,8 @@ class BYRParser():
         else:
             self.isSave = False
             return {}
-        
-        
+
+
 class BYRBBSParser():
     def __init__(self, urls):
         self.urls = urls
@@ -96,7 +96,7 @@ class BYRBBSParser():
         endTime = date(endTimeStamp.year, endTimeStamp.month, endTimeStamp.day).strftime("%Y-%m-%d %H:%M:%S")
         self.timeCondition = "saveTime between '" + startTime + "' and '" + endTime + "'"
     def getAllContent(self):
-        sqlHelper = MySQLHelper('101.1.16.50','s559384db0','995y455y','s559384db0'); 
+        sqlHelper = MySQLHelper('101.1.16.50','s559384db0','995y455y','s559384db0');
         if type(self.urls) == list:
             for urlItem in self.urls:
                 sqlStr = "select infoId from tblJobInfo where bbsId = "+ urlItem["bbsId"] + " and " + self.timeCondition
@@ -112,8 +112,8 @@ class BYRBBSParser():
             for infoDic in temptInfoList:
                 self.existInfoIdList.append(infoDic["infoId"])
             self.getContent(self.urls)
-            
-           
+
+
     def getContent(self, urlItem, pageNum = 0):
         responseContent = requests.get(urlItem["url"] + str(pageNum),  headers = self.headers).content
         encoding = chardet.detect(responseContent)['encoding']
@@ -126,5 +126,19 @@ class BYRBBSParser():
         if parser.isContinue == True:
             pageNum = pageNum + 1
             self.getContent(urlItem, pageNum)
-        
-        
+
+def main():
+    BYRbbsContent = BYRBBSParser({
+                      "url": "http://bbs.byr.cn/board/JobInfo?p=",
+                      "contentUrl": "http://bbs.byr.cn",
+                      "bbsId":4,
+                      "selector": {
+                                   "parseAnchor":  ".title_9",
+                                   "parserTimeStamp": ".title_10"
+                                   }
+                      })
+    BYRbbsContent.getAllContent()
+
+if __name__ == "__main__":
+    main()
+
